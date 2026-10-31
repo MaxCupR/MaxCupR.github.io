@@ -1,3 +1,309 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>MaxCupR</title></head>
-<body><p>Home Assistant / Tesla Fleet key host.</p></body></html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Trail Landlord</title>
+<meta name="description" content="Running 40 UK rental properties properly, on camera. Compliance, tax and systems for small landlords, plus the deadlines that matter.">
+<meta property="og:title" content="Paper Trail Landlord">
+<meta property="og:description" content="Running 40 UK rentals properly. On camera.">
+<meta property="og:image" content="https://maxcupr.github.io/assets/og-banner.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1E3A2F;
+    --green-2: #2A4B3E;
+    --cream: #F4EFE6;
+    --cream-2: #EAE3D6;
+    --yellow: #F2C230;
+    --ink: #1E3A2F;
+    --muted: #4F6259;
+    --line: rgba(30, 58, 47, .15);
+    --bg: var(--cream);
+    --card: #FBF8F2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #142821;
+      --card: #1B3229;
+      --ink: #F4EFE6;
+      --muted: #B8C4BD;
+      --line: rgba(244, 239, 230, .14);
+      --cream-2: #22392F;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 17px/1.6 Inter, system-ui, sans-serif;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 600; letter-spacing: .02em; }
+
+  /* Header */
+  header.top { background: var(--green); color: var(--cream); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: -.01em; }
+  .brand img { width: 34px; height: 34px; border-radius: 6px; }
+  .nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .nav ul a { text-decoration: none; opacity: .85; }
+  .nav ul a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+  /* Hero */
+  .hero { background: var(--green); color: var(--cream); padding: 64px 0 80px;
+    background-image: repeating-linear-gradient(0deg, rgba(244,239,230,.05) 0 1px, transparent 1px 40px); }
+  .hero h1 { font-size: clamp(40px, 7vw, 76px); line-height: 1.02; letter-spacing: -.035em; font-weight: 800; margin: 0 0 18px; max-width: 14ch; }
+  .hero p.lede { font-size: clamp(18px, 2.2vw, 22px); max-width: 40ch; opacity: .9; margin: 0 0 30px; }
+  .tag { display: inline-block; background: var(--yellow); color: #1E3A2F; padding: 6px 12px; font-size: 13px; margin-bottom: 22px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 13px 20px; font-weight: 600; text-decoration: none; border-radius: 6px; border: 2px solid var(--cream); }
+  .btn.primary { background: var(--yellow); border-color: var(--yellow); color: #1E3A2F; }
+  .btn.ghost { color: var(--cream); }
+  .btn:hover { filter: brightness(1.05); }
+  .stats { display: flex; flex-wrap: wrap; gap: 36px; margin-top: 48px; }
+  .stat b { display: block; font-size: 40px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+  .stat span { font-size: 14px; opacity: .8; }
+
+  section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -.025em; line-height: 1.1; margin: 0 0 10px; font-weight: 800; }
+  .sub { color: var(--muted); margin: 0 0 32px; max-width: 60ch; }
+  .eyebrow { font-size: 13px; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; }
+
+  /* Deadlines */
+  .deadlines { display: grid; gap: 10px; }
+  .dl { display: grid; grid-template-columns: 130px 1fr auto; gap: 18px; align-items: center;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; }
+  .dl .date { font-size: 14px; }
+  .dl h3 { margin: 0; font-size: 17px; font-weight: 600; }
+  .dl p { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+  .pill { font-size: 13px; padding: 5px 10px; border-radius: 999px; white-space: nowrap; background: var(--cream-2); }
+  .pill.soon { background: var(--yellow); color: #1E3A2F; }
+  .pill.past { opacity: .6; }
+  .dl.past { opacity: .55; }
+  .note { font-size: 14px; color: var(--muted); margin-top: 16px; }
+
+  /* Episodes */
+  .eps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .ep { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; }
+  .ep:hover { border-color: var(--yellow); }
+  .ep .meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .ep h3 { margin: 0; font-size: 17px; line-height: 1.35; font-weight: 600; }
+  .ep .status.live { color: #1E3A2F; background: var(--yellow); padding: 1px 8px; border-radius: 4px; }
+
+  /* Tracker */
+  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
+  .checklist { list-style: none; padding: 0; margin: 0 0 24px; }
+  .checklist li { padding: 10px 0 10px 32px; border-bottom: 1px solid var(--line); position: relative; }
+  .checklist li::before { content: ""; position: absolute; left: 0; top: 14px; width: 18px; height: 18px; border: 2px solid currentColor; border-radius: 4px; opacity: .6; }
+  .panel { background: var(--green); color: var(--cream); border-radius: 12px; padding: 28px; }
+  .panel h3 { margin: 0 0 8px; font-size: 22px; letter-spacing: -.01em; }
+  .panel p { margin: 0 0 18px; opacity: .9; }
+  .panel form { display: flex; gap: 8px; flex-wrap: wrap; }
+  .panel input { flex: 1 1 200px; padding: 12px 14px; border-radius: 6px; border: 0; font: inherit; }
+  .panel button { padding: 12px 18px; border: 0; border-radius: 6px; background: var(--yellow); color: #1E3A2F; font: 600 16px Inter, sans-serif; cursor: pointer; }
+  .panel small { display: block; margin-top: 12px; opacity: .75; }
+
+  /* About */
+  .about { display: grid; grid-template-columns: 160px 1fr; gap: 36px; align-items: start; }
+  .about img { width: 160px; height: 160px; border-radius: 12px; }
+  .about p { max-width: 62ch; }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+  footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+
+  @media (max-width: 760px) {
+    .nav ul { display: none; }
+    .split, .about { grid-template-columns: 1fr; }
+    .dl { grid-template-columns: 1fr; gap: 6px; }
+    .dl .pill { justify-self: start; }
+    .about img { width: 96px; height: 96px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#"><img src="assets/avatar.png" alt="">Paper Trail Landlord</a>
+    <ul>
+      <li><a href="#deadlines">Deadlines</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#tracker">Free tracker</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="tag mono">COMPLIANCE · TAX · SYSTEMS</div>
+    <h1>Running 40 UK rentals properly. On camera.</h1>
+    <p class="lede">I took over my family's rental portfolio and almost nothing was written down. I'm fixing it, and showing the real sheets, numbers and mistakes as I go.</p>
+    <div class="btns">
+      <a class="btn primary js-yt" href="https://www.youtube.com/@PaperTrailLandlord">Watch on YouTube</a>
+      <a class="btn ghost" href="#tracker">Get the free tracker</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>40</b><span>properties</span></div>
+      <div class="stat"><b>5</b><span>Nottinghamshire towns</span></div>
+      <div class="stat"><b>Thu</b><span>new video every week</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="deadlines">
+  <div class="wrap">
+    <div class="eyebrow mono">What's coming</div>
+    <h2>Landlord deadlines</h2>
+    <p class="sub">The dates that matter to small landlords in England, counted down automatically.</p>
+    <div class="deadlines" id="deadline-list"></div>
+    <p class="note">Dates checked October 2026. Rules change, so confirm on <a href="https://www.gov.uk/browse/housing-local-services/landlords">gov.uk</a> before acting. Not legal or tax advice.</p>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="wrap">
+    <div class="eyebrow mono">The series</div>
+    <h2>Videos</h2>
+    <p class="sub">One property and one problem at a time. New episodes every week.</p>
+    <div class="eps" id="ep-list"></div>
+  </div>
+</section>
+
+<section id="tracker">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow mono">Free download</div>
+      <h2>The compliance tracker</h2>
+      <p class="sub">The one spreadsheet I use to run 40 properties. Every property, every certificate, every expiry date, flagged before it lapses.</p>
+      <ul class="checklist">
+        <li>Gas safety certificates (annual)</li>
+        <li>Electrical reports (EICR, every 5 years)</li>
+        <li>EPC ratings and expiry, with a 2030 band C check</li>
+        <li>Deposit protection and prescribed information</li>
+        <li>Tenancy agreements and information sheets served</li>
+        <li>Landlord register numbers and fees</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Get the tracker</h3>
+      <p id="signup-copy">Google Sheets template, free. One email when each new video goes up. Nothing else.</p>
+      <form id="signup" method="post" target="_blank">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+        <button type="submit">Send it</button>
+      </form>
+      <small id="signup-note">Unsubscribe any time.</small>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <img src="assets/avatar.png" alt="Paper Trail Landlord logo">
+    <div>
+      <div class="eyebrow mono">About</div>
+      <h2>Why this exists</h2>
+      <p>I'm taking over my family's 40 rental properties across Nottingham and north Nottinghamshire: flats in the city through letting agents, and houses in Retford, Tuxford, East Markham and Allerton. My mum ran it for years from memory and a phone. That worked for her. It won't work for me, and it won't survive the 2026 rules.</p>
+      <p>So I'm building the systems from scratch and filming it: compliance trackers, Renters' Rights Act paperwork, Making Tax Digital, checking up on letting agents, and what it costs when things slip.</p>
+      <p>No courses. No "financial freedom" pitch. Just how a small UK landlord keeps the paperwork straight and the tenants safe.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap row">
+    <span>© <span id="yr">2026</span> Paper Trail Landlord</span>
+    <span>I'm a landlord, not a solicitor or accountant. Check anything legal or tax-related on gov.uk or with a professional.</span>
+  </div>
+</footer>
+
+<script>
+  // ---- Settings: edit these ----
+  const YOUTUBE_URL = "https://www.youtube.com/@PaperTrailLandlord";
+  // Paste a form endpoint (e.g. a free newsletter tool's embed URL) to switch the sign-up on.
+  const SIGNUP_URL = "";
+  const TRACKER_LAUNCH = "Mon 9 Nov";
+
+  // Deadlines: [ISO date, title, detail]
+  const DEADLINES = [
+    ["2026-11-07", "MTD quarterly update (Q2)", "Covers Q1 if you missed it. No penalty points for 2026/27."],
+    ["2026-12-15", "Landlord register opens", "West Midlands first, then region by region. £65 per property per year."],
+    ["2027-01-31", "Self assessment 2025/26", "Online return and balancing payment due."],
+    ["2027-02-07", "MTD quarterly update (Q3)", "For landlords already in Making Tax Digital."],
+    ["2027-04-06", "Property income tax rises", "Higher rates on rental profit. Check gov.uk for final rates."],
+    ["2027-04-06", "MTD threshold drops to £30k", "More landlords brought into quarterly reporting."],
+    ["2027-11-14", "Landlord register final deadline", "Last regional window closes."],
+    ["2030-10-01", "EPC band C for all rentals", "£10,000 cost cap (lower for cheaper homes)."]
+  ];
+
+  // Episodes: [publish date, title, YouTube URL or ""]
+  const EPISODES = [
+    ["2026-11-02", "I Inherited 40 Rental Properties With No Paperwork", ""],
+    ["2026-11-05", "Budget 2026: What Actually Changed for Landlords", ""],
+    ["2026-11-09", "The Spreadsheet I Use to Track 40 Rental Properties", ""],
+    ["2026-11-12", "I Checked All 40 Tenancies Against the Renters' Rights Act", ""],
+    ["2026-11-16", "How to Raise Rent in 2026 Without Losing at Tribunal", ""],
+    ["2026-11-19", "The New Landlord Register Will Cost Me £2,600 a Year", ""],
+    ["2026-11-23", "How to Check Your Letting Agent Is Actually Doing Their Job", ""],
+    ["2026-11-26", "The Landlord Tax Rise Nobody's Talking About (April 2027)", ""],
+    ["2026-11-30", "Every Certificate a UK Landlord Needs (and When It Expires)", ""],
+    ["2026-12-03", "What It'll Cost to Get My Worst 5 Rentals to EPC C", ""]
+  ];
+  // ------------------------------
+
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const fmt = d => d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const days = d => Math.round((d - today) / 86400000);
+
+  document.querySelectorAll(".js-yt").forEach(a => a.href = YOUTUBE_URL);
+  document.getElementById("yr").textContent = today.getFullYear();
+
+  // Deadlines: upcoming first, then up to 2 recent past ones at the end
+  const dls = DEADLINES.map(([d, t, p]) => ({ d: new Date(d + "T00:00:00"), t, p }));
+  const upcoming = dls.filter(x => days(x.d) >= 0);
+  const past = dls.filter(x => days(x.d) < 0).slice(-2);
+  document.getElementById("deadline-list").innerHTML = [...upcoming, ...past].map(x => {
+    const n = days(x.d);
+    const label = n < 0 ? "Passed" : n === 0 ? "Today" : n === 1 ? "Tomorrow" : n < 60 ? `${n} days` : n < 730 ? `${Math.round(n / 30)} months` : `${(n / 365).toFixed(1)} years`;
+    const cls = n < 0 ? "past" : n <= 45 ? "soon" : "";
+    return `<div class="dl ${n < 0 ? "past" : ""}">
+      <div class="date mono">${fmt(x.d)}</div>
+      <div><h3>${x.t}</h3><p>${x.p}</p></div>
+      <span class="pill mono ${cls}">${label}</span>
+    </div>`;
+  }).join("");
+
+  // Episodes
+  document.getElementById("ep-list").innerHTML = EPISODES.map(([d, t, url], i) => {
+    const dt = new Date(d + "T18:00:00");
+    const live = new Date() >= dt;
+    const href = url || YOUTUBE_URL;
+    return `<a class="ep" href="${href}" target="_blank" rel="noopener">
+      <div class="meta mono"><span>EP.${String(i + 1).padStart(2, "0")}</span>
+        <span class="status ${live ? "live" : ""}">${live ? "Watch" : fmt(dt)}</span></div>
+      <h3>${t}</h3>
+    </a>`;
+  }).join("");
+
+  // Sign-up
+  const form = document.getElementById("signup");
+  if (SIGNUP_URL) {
+    form.action = SIGNUP_URL;
+  } else {
+    document.getElementById("signup-copy").textContent =
+      `The tracker launches ${TRACKER_LAUNCH} with episode 3. Subscribe on YouTube to get it first.`;
+    form.innerHTML = `<a class="btn primary" href="${YOUTUBE_URL}?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>`;
+    document.getElementById("signup-note").textContent = "Email sign-up opens with the tracker.";
+  }
+</script>
+</body>
+</html>
